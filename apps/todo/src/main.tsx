@@ -1,6 +1,6 @@
+import { ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@mui/material';
 
 import App from './app/App';
 import { theme } from './theme';
