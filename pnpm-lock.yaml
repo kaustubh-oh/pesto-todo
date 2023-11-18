@@ -49,6 +49,7 @@ specifiers:
   prettier: ^2.6.2
   react: 18.2.0
   react-dom: 18.2.0
+  react-icons: ^4.12.0
   reflect-metadata: ^0.1.13
   rxjs: ^7.8.0
   tslib: ^2.3.0
@@ -77,6 +78,7 @@ dependencies:
   pg: 8.11.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-icons: 4.12.0_react@18.2.0
   reflect-metadata: 0.1.13
   rxjs: 7.8.1
   tslib: 2.6.2
@@ -9936,6 +9938,14 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-icons/4.12.0_react@18.2.0:
+    resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
