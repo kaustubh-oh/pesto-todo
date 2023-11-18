@@ -1,14 +1,30 @@
-import { Box, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  Divider,
+  RadioGroup,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 export function Home() {
   return (
-    <Box>
+    <Container maxWidth="md">
       <Stack>
-        <Stack py={6} justifyContent={'center'} alignItems={'center'}>
+        <Stack py={4} justifyContent={'center'} alignItems={'center'}>
           <Typography variant="h3">To Do List</Typography>
+          <Typography
+            variant="caption"
+            color={'gray'}
+            textTransform={'uppercase'}
+          >
+            8 items pending
+          </Typography>
         </Stack>
-        <Box>hi there</Box>
+        <Stack>
+          <RadioGroup></RadioGroup>
+        </Stack>
       </Stack>
-    </Box>
+    </Container>
   );
 }
