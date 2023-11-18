@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AccountsModule } from '../modules/accounts/accounts.module';
 import { TodosModule } from '../modules/todos/todos.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { TodosModule } from '../modules/todos/todos.module';
         synchronize: configService.get<boolean>('DATABASE_SYNC'),
         logging: configService.get<boolean>('DATABASE_LOGGING'),
         database: configService.get('DATABASE_NAME'),
-        entities: [__dirname + '../**/*.entity{.ts,.js}'],
+        namingStrategy: new SnakeNamingStrategy(),
         autoLoadEntities: true,
         retryAttempts: 10,
         retryDelay: 3000,
