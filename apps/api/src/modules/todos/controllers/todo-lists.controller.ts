@@ -27,7 +27,7 @@ export class TodoListsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.todoListsService.findOne(+id);
+    return this.todoListsService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,7 +35,7 @@ export class TodoListsController {
     @Param('id') id: string,
     @Body() updateTodoListDto: UpdateTodoListDto
   ) {
-    return this.todoListsService.update(+id, updateTodoListDto);
+    return this.todoListsService.update(id, updateTodoListDto);
   }
 
   @Delete(':id')

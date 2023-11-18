@@ -16,7 +16,10 @@ export class TodoItemEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+    default: '',
+  })
   description: string;
 
   @ManyToOne(() => TodoListEntity, (list) => list.items)
