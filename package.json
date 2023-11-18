@@ -52,6 +52,8 @@
     "@nestjs/typeorm": "^10.0.1",
     "@radix-ui/colors": "^3.0.0",
     "@swc/helpers": "~0.5.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "pg": "^8.11.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
