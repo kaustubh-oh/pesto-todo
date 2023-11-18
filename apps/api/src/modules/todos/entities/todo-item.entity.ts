@@ -17,7 +17,6 @@ export class TodoItemEntity {
   title: string;
 
   @Column({
-    nullable: true,
     default: '',
   })
   description: string;

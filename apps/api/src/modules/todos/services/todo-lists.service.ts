@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTodoListDto } from '../dto/create-todo-list.dto';
 import { UpdateTodoListDto } from '../dto/update-todo-list.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { TodoListEntity } from '../entities/todo-list.entity';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class TodoListsService {
@@ -13,15 +13,11 @@ export class TodoListsService {
   ) {}
 
   create(createTodoListDto: CreateTodoListDto) {
-    const todoList = this.baseRepository.save(createTodoListDto);
-
-    console.log(todoList);
-
-    return todoList;
+    return this.baseRepository.save(createTodoListDto);
   }
 
   findAll() {
-    return this.baseRepository.findAndCount();
+    return this.baseRepository.find();
   }
 
   findOne(id: string) {
@@ -29,11 +25,10 @@ export class TodoListsService {
   }
 
   update(id: string, updateTodoListDto: UpdateTodoListDto) {
-    // return this.baseRepository.update(id, updateTodoListDto);
-    return `This action updates a #${id} todoList`;
+    return this.baseRepository.save({ id, ...updateTodoListDto });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.baseRepository.delete(id);
   }
 }

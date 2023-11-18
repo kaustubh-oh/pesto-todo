@@ -27,7 +27,7 @@ export class TodoItemsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.todoItemsService.findOne(+id);
+    return this.todoItemsService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class TodoItemsController {
     @Param('id') id: string,
     @Body() updateTodoItemDto: UpdateTodoItemDto
   ) {
-    return this.todoItemsService.update(+id, updateTodoItemDto);
+    return this.todoItemsService.update(id, updateTodoItemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.todoItemsService.remove(+id);
+    return this.todoItemsService.remove(id);
   }
 }

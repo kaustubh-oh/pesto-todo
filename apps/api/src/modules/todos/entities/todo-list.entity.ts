@@ -17,7 +17,6 @@ export class TodoListEntity {
   title: string;
 
   @Column({
-    nullable: true,
     default: '',
   })
   description: string;
