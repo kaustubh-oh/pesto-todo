@@ -14,6 +14,8 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Todo REST APIs')
     .setDescription('The TODO REST API documentation')

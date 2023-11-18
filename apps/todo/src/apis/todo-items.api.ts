@@ -1,0 +1,33 @@
+import { InferType } from 'yup';
+import { CreateTaskSchema, TaskSchema } from '../schemas';
+import { ENDPOINTS, cleanUrlTrialingSlash } from '../shared';
+import { defaultAxiosInstance } from './base';
+
+export const fetchAllTasks = async () => {
+  const response = await defaultAxiosInstance.get<
+    InferType<typeof TaskSchema>[]
+  >(ENDPOINTS.TODO.ITEM);
+
+  return response.data;
+};
+
+export const createItem = async (
+  createTaskData: InferType<typeof CreateTaskSchema>
+) => {
+  const response = await defaultAxiosInstance.post<
+    InferType<typeof TaskSchema>
+  >(ENDPOINTS.TODO.ITEM, createTaskData);
+
+  return response.data;
+};
+
+export const updateList = async (
+  id: string,
+  updateTaskData: Partial<InferType<typeof CreateTaskSchema>>
+) => {
+  const response = await defaultAxiosInstance.patch<
+    Partial<InferType<typeof TaskSchema>>
+  >(`${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`, updateTaskData);
+
+  return response.data;
+};
