@@ -21,7 +21,12 @@ export class TodoItemEntity {
   })
   description: string;
 
-  @ManyToOne(() => TodoListEntity, (list) => list.items)
+  @Column({ select: false })
+  list_id: string;
+
+  @ManyToOne(() => TodoListEntity, (list) => list.items, {
+    nullable: false,
+  })
   list: TodoListEntity;
 
   @CreateDateColumn()

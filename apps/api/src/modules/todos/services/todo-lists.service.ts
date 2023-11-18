@@ -21,7 +21,10 @@ export class TodoListsService {
   }
 
   findOne(id: string) {
-    return this.baseRepository.findOneByOrFail({ id });
+    return this.baseRepository.findOneOrFail({
+      relations: { items: true },
+      where: { id },
+    });
   }
 
   update(id: string, updateTodoListDto: UpdateTodoListDto) {

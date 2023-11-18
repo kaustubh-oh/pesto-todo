@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
 export class CreateTodoListDto {
@@ -6,7 +6,7 @@ export class CreateTodoListDto {
   @IsString()
   title: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   description?: string;
