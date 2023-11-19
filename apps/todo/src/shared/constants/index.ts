@@ -1,7 +1,11 @@
 import { green, grey, orange } from '@mui/material/colors';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
 
-import { PiCheckCircleBold, PiCircleBold } from 'react-icons/pi';
+import {
+  PiCheckCircleBold,
+  PiCircleBold,
+  PiPlayCircleFill,
+} from 'react-icons/pi';
 
 export const ENDPOINTS = {
   TODO: {
@@ -28,7 +32,7 @@ export const TASK_STATUS_CONFIG = {
   },
   [TASK_STATUS_ENUM.IN_PROGRESS]: {
     text: 'In Progress',
-    icon: PiCircleBold,
+    icon: PiPlayCircleFill,
     type: 'IN_PROGRESS',
     color: orange[500],
     palette: 'warning',
