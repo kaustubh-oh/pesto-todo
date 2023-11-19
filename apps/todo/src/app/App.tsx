@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import { Home } from '../pages/Home';
+import { TodoScreens } from '../modules';
 
 export function App() {
-  return <Home />;
+  return <TodoScreens.Home />;
 }
 
 export default App;

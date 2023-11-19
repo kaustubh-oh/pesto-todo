@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { TASK_STATUS_ENUM } from '@pesto/shared';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class CreateTodoItemDto {
   @ApiProperty()
@@ -11,7 +12,13 @@ export class CreateTodoItemDto {
   @IsString()
   description?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsEnum(TASK_STATUS_ENUM)
+  status: TASK_STATUS_ENUM;
+
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  list_id: string;
+  list_id?: string;
 }
