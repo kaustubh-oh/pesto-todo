@@ -10,8 +10,6 @@ import { TodoForm } from '../components/TodoForm';
 
 const allTasksQueryKeys = fetchAllTasksQueryKeys();
 
-const ALL_FILTERS = 'all';
-
 const defaultEditMode = {
   edit: false,
   id: '',
@@ -29,12 +27,26 @@ export function Home() {
 
   const [editMode, setEditMode] = useState(defaultEditMode);
 
-  const [statusFilters, setStatusFilters] = useState<
-    TASK_STATUS_ENUM | typeof ALL_FILTERS
-  >(ALL_FILTERS);
+  const [statusFilters, setStatusFilters] = useState<TASK_STATUS_ENUM[]>([
+    TASK_STATUS_ENUM.TODO,
+    TASK_STATUS_ENUM.IN_PROGRESS,
+  ]);
 
-  const filterByStatus = (status: TASK_STATUS_ENUM | typeof ALL_FILTERS) => {
-    setStatusFilters(status);
+  const filterByAllStatus = () => {
+    if (statusFilters.length > 0) {
+      setStatusFilters([]);
+    } else {
+      setStatusFilters([TASK_STATUS_ENUM.TODO, TASK_STATUS_ENUM.IN_PROGRESS]);
+    }
+  };
+
+  const filterByStatus = (status: TASK_STATUS_ENUM) => {
+    const idx = statusFilters.indexOf(status);
+    if (idx > -1) {
+      statusFilters.splice(idx, 1);
+    } else {
+      setStatusFilters((filters) => [...filters, status]);
+    }
   };
 
   const editTask = (task: Task) => {
@@ -76,7 +88,9 @@ export function Home() {
 
   const filteredData = data
     ? data.filter(
-        (data) => statusFilters === ALL_FILTERS || data.status === statusFilters
+        (data) =>
+          statusFilters.length === 0 ||
+          statusFilters.includes(data.status as TASK_STATUS_ENUM)
       )
     : [];
 
@@ -100,8 +114,8 @@ export function Home() {
               disableElevation
               sx={{ minWidth: '4em', fontSize: '0.7em' }}
               color="success"
-              variant={statusFilters === ALL_FILTERS ? 'contained' : 'outlined'}
-              onClick={() => filterByStatus(ALL_FILTERS)}
+              variant={statusFilters.length === 0 ? 'contained' : 'outlined'}
+              onClick={() => filterByAllStatus()}
             >
               All
             </Button>
@@ -113,7 +127,9 @@ export function Home() {
                   onClick={() => filterByStatus(status)}
                   disableElevation
                   color={config.pallete}
-                  variant={statusFilters === status ? 'contained' : 'outlined'}
+                  variant={
+                    statusFilters.includes(status) ? 'contained' : 'outlined'
+                  }
                   startIcon={<config.icon color={config.color} />}
                   sx={{
                     minWidth: '4em',
