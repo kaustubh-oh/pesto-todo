@@ -21,6 +21,7 @@ import { TASK_STATUS_CONFIG, Task } from '../../../shared';
 
 interface TodoItemProps extends ListItemButtonProps {
   task: Task;
+  editTask: (task: Task) => void;
 }
 
 export function TodoItem({ task, ...props }: TodoItemProps) {
@@ -60,8 +61,17 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
     deleteMutation.mutate(task.id);
   };
 
+  const editTaskHandler: ListItemButtonProps['onClick'] = (e) => {
+    if (taskConfig.type !== 'DONE') props.editTask(task);
+  };
+
   return (
-    <ListItemButton disableRipple color={'primary'} {...props}>
+    <ListItemButton
+      disableRipple
+      color={'primary'}
+      {...props}
+      onClick={editTaskHandler}
+    >
       <IconButton
         disableRipple={task.status === TASK_STATUS_ENUM.DONE}
         onClick={updateTaskStatus}

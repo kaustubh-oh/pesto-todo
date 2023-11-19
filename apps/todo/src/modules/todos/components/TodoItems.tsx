@@ -13,7 +13,7 @@ export function TodoItems({ data, ...props }: TodoItemsProps) {
       {data?.map((task) => {
         return (
           <ListItem key={task.id} disablePadding>
-            <TodoItem task={task} onClick={() => props.editTask(task)} />
+            <TodoItem task={task} editTask={props.editTask} />
           </ListItem>
         );
       })}
