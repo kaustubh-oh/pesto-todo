@@ -43,7 +43,11 @@ export function Home() {
   const filterByStatus = (status: TASK_STATUS_ENUM) => {
     const idx = statusFilters.indexOf(status);
     if (idx > -1) {
-      statusFilters.splice(idx, 1);
+      setStatusFilters((filters) => {
+        const draft = [...filters];
+        draft.splice(idx, 1);
+        return draft;
+      });
     } else {
       setStatusFilters((filters) => [...filters, status]);
     }

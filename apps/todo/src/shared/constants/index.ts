@@ -23,7 +23,7 @@ export const TASK_STATUS_CONFIG = {
     icon: PiCircleBold,
     type: 'TODO',
     color: grey[500],
-    pallete: 'inherit',
+    pallete: 'secondary',
     next: TASK_STATUS_ENUM.IN_PROGRESS,
   },
   [TASK_STATUS_ENUM.IN_PROGRESS]: {
