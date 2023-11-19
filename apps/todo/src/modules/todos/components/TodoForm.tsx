@@ -10,11 +10,12 @@ interface TodoFormProps {
   edit: boolean;
   id?: string;
   initialValues?: InferType<typeof CreateTaskSchema>;
+  onComplete: () => void;
 }
 
 export function TodoForm(props: TodoFormProps) {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, formState } = useForm({
+  const { register, reset, handleSubmit, formState } = useForm({
     resolver: yupResolver(CreateTaskSchema),
     defaultValues: CreateTaskSchema.cast(props.initialValues, {
       assert: false,
@@ -35,6 +36,8 @@ export function TodoForm(props: TodoFormProps) {
 
   const onSave: Parameters<typeof handleSubmit>[0] = (data) => {
     mutation.mutate(data);
+    reset();
+    props.onComplete();
   };
 
   return (
@@ -45,7 +48,6 @@ export function TodoForm(props: TodoFormProps) {
         sx={{ fontSize: '1.5em' }}
         {...register('title')}
         error={!!formState.errors.title}
-        autoFocus
       />
       <Input
         disableUnderline

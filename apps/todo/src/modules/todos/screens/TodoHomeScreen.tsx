@@ -19,7 +19,7 @@ export function Home() {
 
   const renderContent = (
     <Box>
-      <TodoForm edit={false} />
+      <TodoForm edit={false} onComplete={() => setIsEditorOpen(false)} />
     </Box>
   );
 

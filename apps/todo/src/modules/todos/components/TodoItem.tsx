@@ -78,6 +78,11 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
           },
         }}
         primary={task.title}
+        secondary={task.description}
+        secondaryTypographyProps={{
+          fontSize: '0.8em',
+          sx: { fontStyle: 'italic', textOverflow: 'ellipsis' },
+        }}
       />
       <Toolbar variant="dense" disableGutters>
         {deleteMutation.isPending ? (
