@@ -67,7 +67,7 @@ export function Home() {
       )
     : 0;
 
-  const filteredData = getFilteredData(data, 'status');
+  const filteredData = getFilteredData(data as any, 'status');
 
   const mainBody = (
     <Container maxWidth="md">

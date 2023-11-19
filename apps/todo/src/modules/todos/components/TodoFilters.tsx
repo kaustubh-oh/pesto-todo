@@ -1,4 +1,4 @@
-import { Button, Palette, Stack } from '@mui/material';
+import { Button, ButtonProps, Palette, Stack } from '@mui/material';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
 import { TASK_STATUS_CONFIG } from '../../../shared';
 import { useFilters } from '../hooks/useFilters';
@@ -35,7 +35,7 @@ export function TodoFilters({
             key={status}
             onClick={() => filterByValue(status)}
             disableElevation
-            color={config.palette}
+            color={config.palette as ButtonProps['color']}
             variant={filters.includes(status) ? 'contained' : 'outlined'}
             startIcon={<config.icon color={config.color} />}
             sx={{
