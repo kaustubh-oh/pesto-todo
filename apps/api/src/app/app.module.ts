@@ -29,7 +29,7 @@ import { AppService } from './app.service';
         retryDelay: 3000,
       }),
     }),
-    AccountsModule,
+    // AccountsModule,
     TodosModule,
   ],
   controllers: [AppController],
