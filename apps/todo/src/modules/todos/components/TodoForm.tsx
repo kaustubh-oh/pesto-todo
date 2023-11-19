@@ -5,7 +5,12 @@ import { useForm } from 'react-hook-form';
 import { PiArrowRight } from 'react-icons/pi';
 import { InferType } from 'yup';
 import { createTask, fetchAllTasksQueryKeys, updateTask } from '../../../logic';
-import { CreateTaskSchema, ENDPOINTS } from '../../../shared';
+import {
+  CreateTask,
+  CreateTaskSchema,
+  ENDPOINTS,
+  REST_METHODS_ENUM,
+} from '../../../shared';
 interface TodoFormProps {
   edit: boolean;
   id?: string;
@@ -24,18 +29,26 @@ export function TodoForm(props: TodoFormProps) {
 
   const mutation = useMutation({
     mutationKey: [
+      props.edit ? REST_METHODS_ENUM.PATCH : REST_METHODS_ENUM.POST,
       ENDPOINTS.TODO.ITEM,
       ...(props.edit && props?.id ? [props.id] : []),
     ],
-    mutationFn: (data: InferType<typeof CreateTaskSchema>) =>
-      props.edit && props.id ? updateTask(props.id, data) : createTask(data),
+    mutationFn: ({
+      edit = false,
+      data,
+      id = '',
+    }: {
+      edit: boolean;
+      data: CreateTask;
+      id?: string;
+    }) => (edit && id ? updateTask(id, data) : createTask(data)),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: fetchAllTasksQueryKeys() });
     },
   });
 
   const onSave: Parameters<typeof handleSubmit>[0] = (data) => {
-    mutation.mutate(data);
+    mutation.mutate({ edit: props.edit, data, id: props?.id });
     reset();
     props.onComplete();
   };

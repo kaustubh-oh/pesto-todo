@@ -6,8 +6,13 @@ import { fetchAllTasks, fetchAllTasksQueryKeys } from '../../../logic';
 import { CreateTaskSchema, Task } from '../../../shared';
 import { BottomDrawer, TodoItems } from '../../../ui';
 import { TodoForm } from '../components/TodoForm';
+import { TASK_STATUS_ENUM } from '@pesto/shared';
 
 const allTasksQueryKeys = fetchAllTasksQueryKeys();
+
+enum TASK_FILTER_ENUM {
+  ALL = 'all',
+}
 
 const defaultEditMode = {
   edit: false,
@@ -26,8 +31,11 @@ export function Home() {
 
   const [editMode, setEditMode] = useState(defaultEditMode);
 
+  const [filter, setFilter] = useState<TASK_STATUS_ENUM[]>(
+    Object.values(TASK_STATUS_ENUM)
+  );
+
   const editTask = (task: Task) => {
-    setIsEditorOpen(true);
     setEditMode({
       edit: true,
       id: task.id,
@@ -36,18 +44,22 @@ export function Home() {
         stripUnknown: false,
       }),
     });
+    setIsEditorOpen(true);
+  };
+
+  const resetEditor = () => {
+    setEditMode(defaultEditMode);
   };
 
   const onComplete = () => {
     setIsEditorOpen(false);
-    setEditMode(defaultEditMode);
+    resetEditor();
   };
 
-  const renderContent = (
-    <Box>
-      <TodoForm onComplete={onComplete} {...editMode} />
-    </Box>
-  );
+  const onCloseHandler = () => {
+    setIsEditorOpen(false);
+    resetEditor();
+  };
 
   const mainBody = (
     <Container maxWidth="md">
@@ -84,9 +96,9 @@ export function Home() {
       <BottomDrawer
         isOpen={isEditorOpen}
         setIsOpen={setIsEditorOpen}
-        onCloseHandler={() => {}}
+        onCloseHandler={onCloseHandler}
       >
-        {renderContent}
+        <TodoForm onComplete={onComplete} {...editMode} />
       </BottomDrawer>
     </Container>
   );
