@@ -2,14 +2,15 @@ import { Box, Container, SpeedDial, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { PiPlus } from 'react-icons/pi';
-import { fetchAllTasks } from '../../../logic';
-import { ENDPOINTS } from '../../../shared';
+import { fetchAllTasks, fetchAllTasksQueryKeys } from '../../../logic';
 import { BottomDrawer, TodoItems } from '../../../ui';
 import { TodoForm } from '../components/TodoForm';
 
+const allTasksQueryKeys = fetchAllTasksQueryKeys();
+
 export function Home() {
   const { data, isLoading } = useQuery({
-    queryKey: [ENDPOINTS.TODO.ITEM],
+    queryKey: allTasksQueryKeys,
     queryFn: fetchAllTasks,
     refetchOnWindowFocus: false,
   });
@@ -43,7 +44,7 @@ export function Home() {
       </Stack>
       <SpeedDial
         ariaLabel="SpeedDial basic example"
-        sx={{ position: 'absolute', bottom: 16, right: '48%' }}
+        sx={{ position: 'fixed', bottom: 16, right: '48%' }}
         icon={<PiPlus size={30} />}
         onClick={() => {
           setIsEditorOpen(true);

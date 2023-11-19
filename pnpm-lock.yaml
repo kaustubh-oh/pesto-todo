@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@emotion/react': ^11.11.1
   '@emotion/styled': ^11.11.0
+  '@hookform/resolvers': ^3.3.2
   '@mui/material': ^5.14.18
   '@nestjs/common': ^10.0.2
   '@nestjs/config': ^3.1.1
@@ -73,6 +74,7 @@ specifiers:
 dependencies:
   '@emotion/react': 11.11.1_o5ysialsahsznabqayk7pree4e
   '@emotion/styled': 11.11.0_ovfv6oln6yls23w6qq3kptdhqu
+  '@hookform/resolvers': 3.3.2_react-hook-form@7.48.2
   '@mui/material': 5.14.18_7wu6mulxlw34yrugckrhmoumey
   '@nestjs/common': 10.2.9_j3td4gnlgk75ora6o6suo62byy
   '@nestjs/config': 3.1.1_vddqbxtoa2ovtipfitbt6z4ovu
@@ -2130,6 +2132,14 @@ packages:
 
   /@floating-ui/utils/0.1.6:
     resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
+    dev: false
+
+  /@hookform/resolvers/3.3.2_react-hook-form@7.48.2:
+    resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.48.2_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.13:

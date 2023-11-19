@@ -1,11 +1,11 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { IconButton, Input, Stack, Toolbar } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { PiArrowRight } from 'react-icons/pi';
 import { InferType } from 'yup';
-import { createTask, updateTask } from '../../../logic';
+import { createTask, fetchAllTasksQueryKeys, updateTask } from '../../../logic';
 import { CreateTaskSchema, ENDPOINTS } from '../../../shared';
-
 interface TodoFormProps {
   edit: boolean;
   id?: string;
@@ -13,7 +13,9 @@ interface TodoFormProps {
 }
 
 export function TodoForm(props: TodoFormProps) {
-  const { register, handleSubmit } = useForm({
+  const queryClient = useQueryClient();
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(CreateTaskSchema),
     defaultValues: CreateTaskSchema.cast(props.initialValues, {
       assert: false,
     }),
@@ -26,6 +28,9 @@ export function TodoForm(props: TodoFormProps) {
     ],
     mutationFn: (data: InferType<typeof CreateTaskSchema>) =>
       props.edit && props.id ? updateTask(props.id, data) : createTask(data),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: fetchAllTasksQueryKeys() });
+    },
   });
 
   const onSave: Parameters<typeof handleSubmit>[0] = (data) => {
@@ -39,6 +44,7 @@ export function TodoForm(props: TodoFormProps) {
         placeholder="I am going to"
         sx={{ fontSize: '1.5em' }}
         {...register('title')}
+        error={!!formState.errors.title}
         autoFocus
       />
       <Input

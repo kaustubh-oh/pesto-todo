@@ -15,6 +15,8 @@ export const fetchAllTasks = async () => {
   return response.data;
 };
 
+export const fetchAllTasksQueryKeys = () => [ENDPOINTS.TODO.ITEM];
+
 export const createTask = async (
   createTaskData: InferType<typeof CreateTaskSchema>
 ) => {
@@ -32,6 +34,14 @@ export const updateTask = async (
   const response = await defaultAxiosInstance.patch<
     Partial<InferType<typeof TaskSchema>>
   >(`${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`, updateTaskData);
+
+  return response.data;
+};
+
+export const deleteTask = async (id: string) => {
+  const response = await defaultAxiosInstance.delete(
+    `${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`
+  );
 
   return response.data;
 };

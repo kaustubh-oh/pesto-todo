@@ -1,4 +1,4 @@
-import { date, mixed, object, string } from 'yup';
+import { InferType, date, mixed, object, string } from 'yup';
 // import { ListSchema } from './list.schema';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
 
@@ -12,7 +12,7 @@ export const CreateTaskSchema = object({
 });
 
 export const TaskSchema = CreateTaskSchema.shape({
-  id: string().uuid(),
+  id: string().required().uuid(),
   createdAt: date(),
   updatedAt: date(),
 });
@@ -20,3 +20,7 @@ export const TaskSchema = CreateTaskSchema.shape({
 // export const TaskDetailSchema = TaskSchema.shape({
 //   list: ListSchema,
 // });
+
+export type Task = InferType<typeof TaskSchema>;
+export type CreateTask = InferType<typeof CreateTaskSchema>;
+export type UpdateTask = InferType<typeof CreateTaskSchema>;
