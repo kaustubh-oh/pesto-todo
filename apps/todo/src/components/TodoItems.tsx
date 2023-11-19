@@ -20,13 +20,17 @@ export function TodoItems({ data, ...props }: TodoItemsProps) {
         return (
           <ListItem key={task.id} disablePadding>
             <ListItemButton color={'primary'}>
-              {task.status && taskConfig.type == 'DONE' ? (
+              {task.status && taskConfig.type === 'DONE' ? (
                 <PiCheckCircleBold size={24} color={taskConfig.color} />
               ) : (
                 <PiCircleBold size={24} color={taskConfig.color} />
               )}
               <ListItemText
-                sx={{ ml: 1, textTransform: 'capitalize' }}
+                sx={{ ml: 1 }}
+                primaryTypographyProps={{
+                  fontWeight: 'bold',
+                  sx: { ':first-letter': { textTransform: 'uppercase' } },
+                }}
                 primary={task.title}
               />
             </ListItemButton>

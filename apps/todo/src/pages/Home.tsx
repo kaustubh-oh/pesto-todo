@@ -1,8 +1,12 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Box, Container, SpeedDial, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAllTasks } from '../apis/todo-items.api';
 import { TodoItems } from '../components/TodoItems';
 import { ENDPOINTS } from '../shared';
+import { PiPlus } from 'react-icons/pi';
+import { BottomDrawer } from '../components/Drawer';
+import { TodoForm } from '../components/TodoForm';
+import { useState } from 'react';
 
 export function Home() {
   const { data, isLoading } = useQuery({
@@ -10,6 +14,14 @@ export function Home() {
     queryFn: fetchAllTasks,
     refetchOnWindowFocus: false,
   });
+
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+  const renderContent = (
+    <Box>
+      <TodoForm />
+    </Box>
+  );
 
   const mainBody = (
     <Container maxWidth="md">
@@ -30,6 +42,22 @@ export function Home() {
           {!isLoading && data ? <TodoItems data={data} /> : 'Loading...'}
         </Stack>
       </Stack>
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: 'absolute', bottom: 16, right: '48%' }}
+        icon={<PiPlus size={30} />}
+        onClick={() => {
+          setIsEditorOpen(true);
+        }}
+      ></SpeedDial>
+
+      <BottomDrawer
+        isOpen={isEditorOpen}
+        setIsOpen={setIsEditorOpen}
+        onCloseHandler={() => {}}
+      >
+        {renderContent}
+      </BottomDrawer>
     </Container>
   );
 
