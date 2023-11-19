@@ -9,7 +9,7 @@ export const CreateTaskSchema = object({
     .oneOf(Object.values(TASK_STATUS_ENUM))
     .optional()
     .default(TASK_STATUS_ENUM.TODO),
-});
+}).noUnknown();
 
 export const TaskSchema = CreateTaskSchema.shape({
   id: string().required().uuid(),

@@ -3,10 +3,17 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { PiPlus } from 'react-icons/pi';
 import { fetchAllTasks, fetchAllTasksQueryKeys } from '../../../logic';
+import { CreateTaskSchema, Task } from '../../../shared';
 import { BottomDrawer, TodoItems } from '../../../ui';
 import { TodoForm } from '../components/TodoForm';
 
 const allTasksQueryKeys = fetchAllTasksQueryKeys();
+
+const defaultEditMode = {
+  edit: false,
+  id: '',
+  initialValues: CreateTaskSchema.cast({}, { assert: false }),
+};
 
 export function Home() {
   const { data, isLoading } = useQuery({
@@ -17,9 +24,28 @@ export function Home() {
 
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
+  const [editMode, setEditMode] = useState(defaultEditMode);
+
+  const editTask = (task: Task) => {
+    setIsEditorOpen(true);
+    setEditMode({
+      edit: true,
+      id: task.id,
+      initialValues: CreateTaskSchema.cast(task, {
+        assert: false,
+        stripUnknown: false,
+      }),
+    });
+  };
+
+  const onComplete = () => {
+    setIsEditorOpen(false);
+    setEditMode(defaultEditMode);
+  };
+
   const renderContent = (
     <Box>
-      <TodoForm edit={false} onComplete={() => setIsEditorOpen(false)} />
+      <TodoForm onComplete={onComplete} {...editMode} />
     </Box>
   );
 
@@ -39,7 +65,11 @@ export function Home() {
           </Typography>
         </Stack>
         <Stack>
-          {!isLoading && data ? <TodoItems data={data} /> : 'Loading...'}
+          {!isLoading && data ? (
+            <TodoItems data={data} editTask={editTask} />
+          ) : (
+            'Loading...'
+          )}
         </Stack>
       </Stack>
       <SpeedDial

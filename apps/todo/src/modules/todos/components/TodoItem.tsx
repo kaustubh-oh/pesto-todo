@@ -81,7 +81,13 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
         secondary={task.description}
         secondaryTypographyProps={{
           fontSize: '0.8em',
-          sx: { fontStyle: 'italic', textOverflow: 'ellipsis' },
+          sx: {
+            fontStyle: 'italic',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            pr: 2,
+          },
         }}
       />
       <Toolbar variant="dense" disableGutters>
