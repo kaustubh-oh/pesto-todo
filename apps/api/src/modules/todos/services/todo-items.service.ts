@@ -19,7 +19,7 @@ export class TodoItemsService {
   findAll() {
     return this.baseRepository.find({
       order: {
-        createdAt: 'DESC',
+        createdAt: 'ASC',
       },
     });
   }
