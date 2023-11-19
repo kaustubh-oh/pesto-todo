@@ -1,12 +1,11 @@
 import { Box, Container, SpeedDial, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAllTasks } from '../apis/todo-items.api';
-import { TodoItems } from '../components/TodoItems';
-import { ENDPOINTS } from '../shared';
-import { PiPlus } from 'react-icons/pi';
-import { BottomDrawer } from '../components/Drawer';
-import { TodoForm } from '../components/TodoForm';
 import { useState } from 'react';
+import { PiPlus } from 'react-icons/pi';
+import { fetchAllTasks } from '../../../logic';
+import { ENDPOINTS } from '../../../shared';
+import { BottomDrawer, TodoItems } from '../../../ui';
+import { TodoForm } from '../components/TodoForm';
 
 export function Home() {
   const { data, isLoading } = useQuery({

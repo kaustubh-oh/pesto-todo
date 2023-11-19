@@ -1,7 +1,11 @@
 import { InferType } from 'yup';
-import { ENDPOINTS, cleanUrlTrialingSlash } from '../shared';
+import { ENDPOINTS, cleanUrlTrialingSlash } from '../../shared';
 import { defaultAxiosInstance } from './base';
-import { CreateListSchema, ListDetailSchema, ListSchema } from '../schemas';
+import {
+  CreateListSchema,
+  ListDetailSchema,
+  ListSchema,
+} from '../../shared/schemas';
 
 export const fetchAllLists = async () => {
   const response = await defaultAxiosInstance.get<InferType<typeof ListSchema>>(

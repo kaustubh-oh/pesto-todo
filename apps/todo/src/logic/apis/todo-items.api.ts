@@ -1,6 +1,6 @@
 import { InferType } from 'yup';
-import { CreateTaskSchema, TaskSchema } from '../schemas';
-import { ENDPOINTS, cleanUrlTrialingSlash } from '../shared';
+import { CreateTaskSchema, TaskSchema } from '../../shared/schemas';
+import { ENDPOINTS, cleanUrlTrialingSlash } from '../../shared';
 import { defaultAxiosInstance } from './base';
 
 export const fetchAllTasks = async () => {
@@ -11,7 +11,7 @@ export const fetchAllTasks = async () => {
   return response.data;
 };
 
-export const createItem = async (
+export const createTask = async (
   createTaskData: InferType<typeof CreateTaskSchema>
 ) => {
   const response = await defaultAxiosInstance.post<
@@ -21,7 +21,7 @@ export const createItem = async (
   return response.data;
 };
 
-export const updateList = async (
+export const updateTask = async (
   id: string,
   updateTaskData: Partial<InferType<typeof CreateTaskSchema>>
 ) => {
