@@ -2,6 +2,7 @@ import { InferType } from 'yup';
 import {
   CreateTaskSchema,
   ENDPOINTS,
+  REST_METHODS_ENUM,
   TaskSchema,
   cleanUrlTrialingSlash,
 } from '../../shared';
@@ -15,7 +16,10 @@ export const fetchAllTasks = async () => {
   return response.data;
 };
 
-export const fetchAllTasksQueryKeys = () => [ENDPOINTS.TODO.ITEM];
+export const fetchAllTasksQueryKeys = () => [
+  REST_METHODS_ENUM.GET,
+  ENDPOINTS.TODO.ITEM,
+];
 
 export const createTask = async (
   createTaskData: InferType<typeof CreateTaskSchema>
@@ -37,6 +41,19 @@ export const updateTask = async (
 
   return response.data;
 };
+
+export const updateTaskMutationKeys = (id: string) => [
+  REST_METHODS_ENUM.PATCH,
+  ENDPOINTS.TODO.ITEM,
+  id,
+];
+
+export const updateTaskStatusMutationKeys = (id: string) => [
+  REST_METHODS_ENUM.PATCH,
+  ENDPOINTS.TODO.ITEM,
+  id,
+  'task_status',
+];
 
 export const deleteTask = async (id: string) => {
   const response = await defaultAxiosInstance.delete(
