@@ -26,7 +26,7 @@ export const BottomDrawer = (props: BottomDrawerProps) => {
         '& .MuiDrawer-paper': {
           maxWidth: 'sm',
           mx: 'auto',
-          mb: 2,
+          m: 2,
           borderRadius: 4,
           boxSizing: 'border-box',
         },

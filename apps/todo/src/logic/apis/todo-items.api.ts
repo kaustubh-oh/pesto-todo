@@ -1,6 +1,6 @@
+import { AxiosResponse } from 'axios';
 import { InferType } from 'yup';
 import {
-  CreateTask,
   CreateTaskSchema,
   ENDPOINTS,
   REST_METHODS_ENUM,
@@ -8,14 +8,14 @@ import {
   TaskSchema,
   cleanUrlTrialingSlash,
 } from '../../shared';
-import { defaultAxiosInstance } from './base';
+import { ErrorResponseBody, defaultAxiosInstance } from './base';
 
 export const fetchAllTasks = async () => {
   const response = await defaultAxiosInstance.get<
     InferType<typeof TaskSchema>[]
   >(ENDPOINTS.TODO.ITEM);
 
-  return response.data;
+  return response?.data;
 };
 
 export const fetchAllTasksQueryKeys = () => [
@@ -26,24 +26,24 @@ export const fetchAllTasksQueryKeys = () => [
 export const createTask = async (
   createTaskData: InferType<typeof CreateTaskSchema>
 ) => {
-  const response = await defaultAxiosInstance.post<Task>(
-    ENDPOINTS.TODO.ITEM,
-    createTaskData
-  );
+  const response = await defaultAxiosInstance.post<
+    Task,
+    AxiosResponse<Task, ErrorResponseBody>
+  >(ENDPOINTS.TODO.ITEM, createTaskData);
 
-  return response.data;
+  return response?.data;
 };
 
 export const updateTask = async (
   id: string,
   updateTaskData: Partial<InferType<typeof CreateTaskSchema>>
 ) => {
-  const response = await defaultAxiosInstance.patch<Task>(
-    `${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`,
-    updateTaskData
-  );
+  const response = await defaultAxiosInstance.patch<
+    Task,
+    AxiosResponse<Task, ErrorResponseBody>
+  >(`${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`, updateTaskData);
 
-  return response.data;
+  return response?.data;
 };
 
 export const updateTaskMutationKeys = (id: string) => [
@@ -64,5 +64,5 @@ export const deleteTask = async (id: string) => {
     `${cleanUrlTrialingSlash(ENDPOINTS.TODO.ITEM, true)}${id}`
   );
 
-  return response.data;
+  return response?.data;
 };

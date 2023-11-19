@@ -54,13 +54,13 @@ export function TodoForm(props: TodoFormProps) {
     }) => (edit && id ? updateTask(id, data) : createTask(data)),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: fetchAllTasksQueryKeys() });
+      reset();
+      props.onComplete();
     },
   });
 
   const onSave: Parameters<typeof handleSubmit>[0] = (data) => {
     mutation.mutate({ edit: props.edit, data, id: props?.id });
-    reset();
-    props.onComplete();
   };
 
   return (
