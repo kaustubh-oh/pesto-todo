@@ -1,5 +1,5 @@
 import { date, mixed, object, string } from 'yup';
-import { ListSchema } from './list.schema';
+// import { ListSchema } from './list.schema';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
 
 export const CreateTaskSchema = object({
@@ -7,6 +7,7 @@ export const CreateTaskSchema = object({
   description: string().optional().default(''),
   status: mixed()
     .oneOf(Object.values(TASK_STATUS_ENUM))
+    .optional()
     .default(TASK_STATUS_ENUM.TODO),
 });
 
@@ -16,6 +17,6 @@ export const TaskSchema = CreateTaskSchema.shape({
   updatedAt: date(),
 });
 
-export const TaskDetailSchema = TaskSchema.shape({
-  list: ListSchema,
-});
+// export const TaskDetailSchema = TaskSchema.shape({
+//   list: ListSchema,
+// });

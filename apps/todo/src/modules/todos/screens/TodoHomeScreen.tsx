@@ -18,7 +18,7 @@ export function Home() {
 
   const renderContent = (
     <Box>
-      <TodoForm />
+      <TodoForm edit={false} />
     </Box>
   );
 

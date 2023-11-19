@@ -1,25 +1,56 @@
 import { IconButton, Input, Stack, Toolbar } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 import { PiArrowRight } from 'react-icons/pi';
+import { InferType } from 'yup';
+import { createTask, updateTask } from '../../../logic';
+import { CreateTaskSchema, ENDPOINTS } from '../../../shared';
 
-export function TodoForm() {
-  const onSave = () => {};
+interface TodoFormProps {
+  edit: boolean;
+  id?: string;
+  initialValues?: InferType<typeof CreateTaskSchema>;
+}
+
+export function TodoForm(props: TodoFormProps) {
+  const { register, handleSubmit } = useForm({
+    defaultValues: CreateTaskSchema.cast(props.initialValues, {
+      assert: false,
+    }),
+  });
+
+  const mutation = useMutation({
+    mutationKey: [
+      ENDPOINTS.TODO.ITEM,
+      ...(props.edit && props?.id ? [props.id] : []),
+    ],
+    mutationFn: (data: InferType<typeof CreateTaskSchema>) =>
+      props.edit && props.id ? updateTask(props.id, data) : createTask(data),
+  });
+
+  const onSave: Parameters<typeof handleSubmit>[0] = (data) => {
+    mutation.mutate(data);
+  };
+
   return (
-    <Stack component={'form'} onSubmit={onSave} py={2}>
+    <Stack component={'form'} onSubmit={handleSubmit(onSave)} py={2}>
       <Input
         disableUnderline
         placeholder="I am going to"
         sx={{ fontSize: '1.5em' }}
+        {...register('title')}
         autoFocus
       />
       <Input
         disableUnderline
         placeholder="description"
+        {...register('description')}
         sx={{ fontSize: '0.9em', mt: -0.5 }}
       />
       <Toolbar
         sx={{ w: '100%', px: '0!important', minHeight: '2em!important' }}
       >
-        <IconButton sx={{ ml: 'auto' }}>
+        <IconButton type={'submit'} sx={{ ml: 'auto' }}>
           <PiArrowRight />
         </IconButton>
       </Toolbar>

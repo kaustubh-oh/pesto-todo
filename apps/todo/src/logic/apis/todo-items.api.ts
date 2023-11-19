@@ -1,6 +1,10 @@
 import { InferType } from 'yup';
-import { CreateTaskSchema, TaskSchema } from '../../shared/schemas';
-import { ENDPOINTS, cleanUrlTrialingSlash } from '../../shared';
+import {
+  CreateTaskSchema,
+  ENDPOINTS,
+  TaskSchema,
+  cleanUrlTrialingSlash,
+} from '../../shared';
 import { defaultAxiosInstance } from './base';
 
 export const fetchAllTasks = async () => {

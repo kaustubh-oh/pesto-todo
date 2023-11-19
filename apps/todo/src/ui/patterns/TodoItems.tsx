@@ -1,9 +1,8 @@
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { InferType } from 'yup';
-import { TaskSchema } from '../../shared/schemas';
-import { PiCheckCircleBold, PiCircleBold } from 'react-icons/pi';
-import { TASK_STATUS_CONFIG } from '../../shared';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
+import { PiCheckCircleBold, PiCircleBold } from 'react-icons/pi';
+import { InferType } from 'yup';
+import { TASK_STATUS_CONFIG, TaskSchema } from '../../shared';
 
 interface TodoItemsProps {
   data: InferType<typeof TaskSchema>[];

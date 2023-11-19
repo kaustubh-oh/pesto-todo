@@ -29,7 +29,7 @@ export class TodoItemEntity {
   })
   status: TASK_STATUS_ENUM;
 
-  @Column({ select: false })
+  @Column({ select: false, nullable: true })
   list_id: string;
 
   @ManyToOne(() => TodoListEntity, (list) => list.items, {
