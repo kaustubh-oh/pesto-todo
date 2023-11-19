@@ -23,7 +23,7 @@ export const TASK_STATUS_CONFIG = {
     icon: PiCircleBold,
     type: 'TODO',
     color: grey[500],
-    pallete: 'secondary',
+    palette: 'secondary',
     next: TASK_STATUS_ENUM.IN_PROGRESS,
   },
   [TASK_STATUS_ENUM.IN_PROGRESS]: {
@@ -31,7 +31,7 @@ export const TASK_STATUS_CONFIG = {
     icon: PiCircleBold,
     type: 'IN_PROGRESS',
     color: orange[500],
-    pallete: 'warning',
+    palette: 'warning',
     next: TASK_STATUS_ENUM.DONE,
   },
   [TASK_STATUS_ENUM.DONE]: {
@@ -39,7 +39,7 @@ export const TASK_STATUS_CONFIG = {
     icon: PiCheckCircleBold,
     type: 'DONE',
     color: green[500],
-    pallete: 'success',
+    palette: 'success',
     next: TASK_STATUS_ENUM.DONE,
   },
 };

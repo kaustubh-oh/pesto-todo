@@ -5,7 +5,7 @@ import { TASK_STATUS_ENUM } from '@pesto/shared';
 export const CreateTaskSchema = object({
   title: string().required(),
   description: string().optional().default(''),
-  status: mixed()
+  status: mixed<TASK_STATUS_ENUM>()
     .oneOf(Object.values(TASK_STATUS_ENUM))
     .optional()
     .default(TASK_STATUS_ENUM.TODO),

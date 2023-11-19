@@ -7,6 +7,9 @@ import { fetchAllTasks, fetchAllTasksQueryKeys } from '../../../logic';
 import { CreateTaskSchema, TASK_STATUS_CONFIG, Task } from '../../../shared';
 import { BottomDrawer, TodoItems } from '../../../ui';
 import { TodoForm } from '../components/TodoForm';
+import { useEditOrNewForm } from '../hooks/useEditor';
+import { useFilters } from '../hooks/useFilters';
+import { TodoFilters } from '../components/TodoFilters';
 
 const allTasksQueryKeys = fetchAllTasksQueryKeys();
 
@@ -25,48 +28,22 @@ export function Home() {
 
   const [isEditorOpen, setIsEditorOpen] = useState(false);
 
-  const [editMode, setEditMode] = useState(defaultEditMode);
+  const { editMode, editTask, resetEditor } = useEditOrNewForm(defaultEditMode);
 
-  const [statusFilters, setStatusFilters] = useState<TASK_STATUS_ENUM[]>([
+  const { getFilteredData, ...filterProps } = useFilters([
     TASK_STATUS_ENUM.TODO,
     TASK_STATUS_ENUM.IN_PROGRESS,
   ]);
 
-  const filterByAllStatus = () => {
-    if (statusFilters.length > 0) {
-      setStatusFilters([]);
-    } else {
-      setStatusFilters([TASK_STATUS_ENUM.TODO, TASK_STATUS_ENUM.IN_PROGRESS]);
-    }
-  };
-
-  const filterByStatus = (status: TASK_STATUS_ENUM) => {
-    const idx = statusFilters.indexOf(status);
-    if (idx > -1) {
-      setStatusFilters((filters) => {
-        const draft = [...filters];
-        draft.splice(idx, 1);
-        return draft;
-      });
-    } else {
-      setStatusFilters((filters) => [...filters, status]);
-    }
-  };
-
-  const editTask = (task: Task) => {
-    setEditMode({
-      edit: true,
-      id: task.id,
-      initialValues: CreateTaskSchema.cast(task, {
+  const editTaskHandler = (task: Task) => {
+    editTask(
+      task.id,
+      CreateTaskSchema.cast(task, {
         assert: false,
         stripUnknown: false,
-      }),
-    });
+      })
+    );
     setIsEditorOpen(true);
-  };
-
-  const resetEditor = () => {
-    setEditMode(defaultEditMode);
   };
 
   const onComplete = () => {
@@ -90,13 +67,7 @@ export function Home() {
       )
     : 0;
 
-  const filteredData = data
-    ? data.filter(
-        (data) =>
-          statusFilters.length === 0 ||
-          statusFilters.includes(data.status as TASK_STATUS_ENUM)
-      )
-    : [];
+  const filteredData = getFilteredData(data, 'status');
 
   const mainBody = (
     <Container maxWidth="md">
@@ -112,43 +83,11 @@ export function Home() {
           >
             {numCompleted}/{data?.length} tasks completed
           </Typography>
-          <Stack spacing={1} py={2} direction={'row'}>
-            <Button
-              size={'small'}
-              disableElevation
-              sx={{ minWidth: '4em', fontSize: '0.7em' }}
-              color="success"
-              variant={statusFilters.length === 0 ? 'contained' : 'outlined'}
-              onClick={() => filterByAllStatus()}
-            >
-              All
-            </Button>
-            {Object.values(TASK_STATUS_ENUM).map((status) => {
-              const config = TASK_STATUS_CONFIG[status];
-              return (
-                <Button
-                  size={'small'}
-                  onClick={() => filterByStatus(status)}
-                  disableElevation
-                  color={config.pallete}
-                  variant={
-                    statusFilters.includes(status) ? 'contained' : 'outlined'
-                  }
-                  startIcon={<config.icon color={config.color} />}
-                  sx={{
-                    minWidth: '4em',
-                    fontSize: '0.7em',
-                  }}
-                >
-                  {config.text}
-                </Button>
-              );
-            })}
-          </Stack>
+          <TodoFilters {...filterProps} />
         </Stack>
         <Stack pb={10}>
           {!isLoading && filteredData ? (
-            <TodoItems data={filteredData} editTask={editTask} />
+            <TodoItems data={filteredData} editTask={editTaskHandler} />
           ) : (
             'Loading...'
           )}
