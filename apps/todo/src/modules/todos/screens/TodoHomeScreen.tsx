@@ -86,8 +86,18 @@ export function Home() {
           <TodoFilters {...filterProps} />
         </Stack>
         <Stack pb={10}>
-          {!isLoading && filteredData ? (
-            <TodoItems data={filteredData} editTask={editTaskHandler} />
+          {!isLoading ? (
+            filteredData.length > 0 ? (
+              <TodoItems data={filteredData} editTask={editTaskHandler} />
+            ) : (
+              <Typography
+                textAlign={'center'}
+                fontStyle={'italic'}
+                color={'grey'}
+              >
+                No Tasks added yet.
+              </Typography>
+            )
           ) : (
             'Loading...'
           )}
@@ -95,7 +105,7 @@ export function Home() {
       </Stack>
       <SpeedDial
         ariaLabel="SpeedDial basic example"
-        sx={{ position: 'fixed', bottom: 16, right: '48%' }}
+        sx={{ position: 'fixed', bottom: 16, right: '45%' }}
         icon={<PiPlus size={30} />}
         onClick={() => {
           setIsEditorOpen(true);
