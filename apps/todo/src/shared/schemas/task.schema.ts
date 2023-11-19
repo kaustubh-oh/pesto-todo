@@ -3,7 +3,7 @@ import { InferType, date, mixed, object, string } from 'yup';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
 
 export const CreateTaskSchema = object({
-  title: string().required(),
+  title: string().required().min(3),
   description: string().optional().default(''),
   status: mixed<TASK_STATUS_ENUM>()
     .oneOf(Object.values(TASK_STATUS_ENUM))

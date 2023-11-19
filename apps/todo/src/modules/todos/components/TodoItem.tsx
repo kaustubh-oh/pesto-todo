@@ -24,7 +24,7 @@ interface TodoItemProps extends ListItemButtonProps {
   editTask: (task: Task) => void;
 }
 
-export function TodoItem({ task, ...props }: TodoItemProps) {
+export function TodoItem({ task, editTask, ...props }: TodoItemProps) {
   const queryClient = useQueryClient();
 
   const taskConfig =
@@ -62,7 +62,7 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
   };
 
   const editTaskHandler: ListItemButtonProps['onClick'] = (e) => {
-    if (taskConfig.type !== 'DONE') props.editTask(task);
+    if (taskConfig.type !== 'DONE') editTask(task);
   };
 
   return (

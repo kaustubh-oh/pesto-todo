@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TodoItemsService } from '../services/todo-items.service';
 import { CreateTodoItemDto } from '../dto/create-todo-item.dto';
@@ -16,7 +17,7 @@ export class TodoItemsController {
   constructor(private readonly todoItemsService: TodoItemsService) {}
 
   @Post()
-  create(@Body() createTodoItemDto: CreateTodoItemDto) {
+  create(@Body(ValidationPipe) createTodoItemDto: CreateTodoItemDto) {
     return this.todoItemsService.create(createTodoItemDto);
   }
 
@@ -33,7 +34,7 @@ export class TodoItemsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateTodoItemDto: UpdateTodoItemDto
+    @Body(ValidationPipe) updateTodoItemDto: UpdateTodoItemDto
   ) {
     return this.todoItemsService.update(id, updateTodoItemDto);
   }

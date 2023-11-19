@@ -32,6 +32,7 @@ export function TodoFilters({
         return (
           <Button
             size={'small'}
+            key={status}
             onClick={() => filterByValue(status)}
             disableElevation
             color={config.palette}

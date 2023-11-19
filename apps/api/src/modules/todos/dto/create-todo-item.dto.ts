@@ -1,10 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TASK_STATUS_ENUM } from '@pesto/shared';
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateTodoItemDto {
   @ApiProperty()
   @IsString()
+  @MinLength(3)
   title: string;
 
   @ApiPropertyOptional()
