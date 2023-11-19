@@ -1,6 +1,7 @@
 import {
   CircularProgress,
   IconButton,
+  IconButtonProps,
   ListItemButton,
   ListItemButtonProps,
   ListItemText,
@@ -47,10 +48,16 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
     },
   });
 
-  const updateTaskStatus = () => {
+  const updateTaskStatus: IconButtonProps['onClick'] = (e) => {
+    e.stopPropagation();
     if (task.status !== TASK_STATUS_ENUM.DONE) {
       updateStatusMutation.mutate();
     }
+  };
+
+  const deleteTaskHandler: IconButtonProps['onClick'] = (e) => {
+    e.stopPropagation();
+    deleteMutation.mutate(task.id);
   };
 
   return (
@@ -94,10 +101,7 @@ export function TodoItem({ task, ...props }: TodoItemProps) {
         {deleteMutation.isPending ? (
           <CircularProgress size={20} />
         ) : (
-          <IconButton
-            onClick={() => deleteMutation.mutate(task.id)}
-            sx={{ m: -1 }}
-          >
+          <IconButton onClick={deleteTaskHandler} sx={{ m: -1 }}>
             <GoTrash size={18} />
           </IconButton>
         )}
